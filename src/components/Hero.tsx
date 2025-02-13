@@ -5,7 +5,7 @@ function Hero() {
     const [videoUrl, setVideoUrl] = useState("");
     const [videoId, setVideoId] = useState<string | null>(null);
     const [loading, setLoading] = useState(false); // Track summarization state
-    const [selectedOption, setSelectedOption] = useState(""); // Track dropdown selection
+    //const [selectedOption, setSelectedOption] = useState(""); // Track dropdown selection
 
     // Function to validate YouTube URL and extract video ID
     const extractVideoId = (url: string): string | null => {
@@ -22,10 +22,6 @@ function Hero() {
         // Extract video ID if the URL is valid
         const id = extractVideoId(url);
         setVideoId(id);
-    };
-
-    const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedOption(e.target.value);
     };
 
     const handleTranscriptSubmit = () => {
@@ -45,6 +41,11 @@ function Hero() {
         }, 3000);
     };
 
+    {/*
+    const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedOption(e.target.value);
+    };
+
     const handleMetadataSubmit = () => {
         if (!videoId || !selectedOption) {
             alert("Please enter a valid YouTube URL and select an option.");
@@ -62,6 +63,7 @@ function Hero() {
             console.log(`${selectedOption} completed!`);
         }, 3000);
     };
+    */}
 
     return (
         <div className="container">

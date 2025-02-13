@@ -1,4 +1,4 @@
-import { useState, lazy } from "react";
+import { lazy } from "react";
 const Hero = lazy(() => import("./components/Hero"));
 import "./App.css";
 
