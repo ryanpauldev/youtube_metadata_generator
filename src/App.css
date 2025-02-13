@@ -1,0 +1,67 @@
+/* Global styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+}
+
+/* Centering the main container */
+.container {
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Input & button styles */
+.input-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Responsive adjustments */
+@media (min-width: 600px) {
+  .input-container {
+    flex-direction: row;
+  }
+
+  input {
+    flex: 1;
+  }
+}
+
+.thumbnail-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.thumbnail {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
