@@ -2,7 +2,6 @@
     "framework": "vite",
     "functions": {
         "api/index.js": {
-            "runtime": "nodejs18.x",
             "memory": 1024,
             "maxDuration": 30,
             "includeFiles": "api/get_transcript.py"
