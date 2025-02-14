@@ -4,8 +4,8 @@ import VideoPreview from "./VideoPreview";
 function Hero() {
     const [videoUrl, setVideoUrl] = useState("");
     const [videoId, setVideoId] = useState<string | null>(null);
-    const [loading, setLoading] = useState(false); // Track summarization state
-    //const [selectedOption, setSelectedOption] = useState(""); // Track dropdown selection
+    const [loading, setLoading] = useState(false);
+    const [transcript, setTranscript] = useState<string | null>(null); // Store transcript text
 
     // Function to validate YouTube URL and extract video ID
     const extractVideoId = (url: string): string | null => {
@@ -22,53 +22,53 @@ function Hero() {
         // Extract video ID if the URL is valid
         const id = extractVideoId(url);
         setVideoId(id);
+        setTranscript(null); // Reset transcript when a new URL is entered
     };
 
-    const handleTranscriptSubmit = () => {
+    // Automatically set API base URL based on environment
+    const API_BASE_URL =
+        import.meta.env.MODE === "development"
+            ? "http://localhost:5000/api"
+            : "/api"; // Vercel handles this automatically in production
+
+    const handleTranscriptSubmit = async () => {
         if (!videoId) {
-            alert("Please enter a valid YouTube URL and select an option.");
+            alert("Please enter a valid YouTube URL.");
             return;
         }
 
-        console.log(`Processing video: ${videoUrl}`);
+        console.log(`Processing transcript for video: ${videoUrl}`);
 
-        setLoading(true); // Show loading state
+        setLoading(true);
+        setTranscript(null);
 
-        // Simulating a network request delay (Replace this with actual API call)
-        setTimeout(() => {
-            setLoading(false); // Reset loading state after processing
-            console.log(`transcription completed!`);
-        }, 3000);
-    };
+        try {
+            // Use API_BASE_URL inside the fetch request
+            const response = await fetch(`${API_BASE_URL}/transcribe?videoId=${videoId}`);
+            const data = await response.json();
 
-    {/*
-    const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedOption(e.target.value);
-    };
-
-    const handleMetadataSubmit = () => {
-        if (!videoId || !selectedOption) {
-            alert("Please enter a valid YouTube URL and select an option.");
-            return;
+            if (response.ok) {
+                if (data.transcript.includes("Error: No transcript found")) {
+                    setTranscript("❌ No transcript available for this video.");
+                } else {
+                    setTranscript(data.transcript);
+                    console.log("Transcript received:", data.transcript);
+                }
+            } else {
+                throw new Error(data.error || "Failed to generate transcript.");
+            }
+        } catch (error) {
+            console.error("Error fetching transcript:", error);
+            setTranscript("❌ Error fetching transcript. Please try again.");
+        } finally {
+            setLoading(false);
         }
-
-        console.log(`Processing video: ${videoUrl}`);
-        console.log(`Selected action: ${selectedOption}`);
-
-        setLoading(true); // Show loading state
-
-        // Simulating a network request delay (Replace this with actual API call)
-        setTimeout(() => {
-            setLoading(false); // Reset loading state after processing
-            console.log(`${selectedOption} completed!`);
-        }, 3000);
     };
-    */}
 
     return (
         <div className="container">
-            <h1>YouTube Video Summarizer</h1>
-            <p>Enter a YouTube URL to generate a summary, chapters, or tags.</p>
+            <h1>YouTube Metadata Generator</h1>
+            <p>Enter a YouTube URL to generate a transcript.</p>
 
             {/* Show Video Preview if a valid video ID is detected */}
             <VideoPreview videoId={videoId} />
@@ -82,11 +82,11 @@ function Hero() {
                     placeholder="Paste YouTube video URL here..."
                     value={videoUrl}
                     onChange={handleInputChange}
-                    disabled={loading} // Disable input during processing
+                    disabled={loading}
                 />
             </div>
 
-            {/* Only show the dropdown if a valid YouTube URL is entered */}
+            {/* Show Generate Transcript Button when a valid video ID is detected */}
             {videoId && (
                 <div className="input-container">
                     <button onClick={handleTranscriptSubmit} disabled={loading}>
@@ -94,10 +94,22 @@ function Hero() {
                     </button>
                 </div>
             )}
+
+            {/* Display the Transcript Below in a Scrollable Container */}
+            {transcript && (
+                <div className="transcript-container">
+                    <h3>Transcript</h3>
+                    <div className="transcript-content">
+                        {transcript}
+                    </div>
+                </div>
+            )}
+
         </div>
     );
 }
 
 export default Hero;
+
 
 

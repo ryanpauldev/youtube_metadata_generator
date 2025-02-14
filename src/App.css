@@ -65,3 +65,30 @@ input {
   border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
+
+.transcript-container {
+  margin-top: 20px;
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+  background: #1a1a1a;
+  color: white;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.transcript-content {
+  max-height: 300px;
+  /* Set fixed height */
+  overflow-y: auto;
+  /* Enable scrolling */
+  text-align: left;
+  padding: 10px;
+  background: #2a2a2a;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  /* Preserve line breaks */
+}
