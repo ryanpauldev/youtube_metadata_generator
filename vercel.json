@@ -1,15 +1,26 @@
 {
+    "framework": "vite",
     "functions": {
         "api/index.js": {
+            "runtime": "nodejs18.x",
             "memory": 1024,
-            "maxDuration": 30
+            "maxDuration": 30,
+            "includeFiles": [
+                "api/get_transcript.py"
+            ]
         }
     },
-    "buildCommand": "pip3 install -r api/requirements.txt",
     "routes": [
         {
             "src": "/api/(.*)",
             "dest": "/api/index.js"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/index.html"
         }
-    ]
+    ],
+    "buildCommand": "npm run build",
+    "installCommand": "npm install && pip3 install -r api/requirements.txt",
+    "outputDirectory": "dist"
 }
