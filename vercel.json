@@ -1,8 +1,14 @@
 {
-    "rewrites": [
+    "functions": {
+        "api/index.js": {
+            "memory": 1024,
+            "maxDuration": 30
+        }
+    },
+    "routes": [
         {
-            "source": "/(.*)",
-            "destination": "/"
+            "src": "/api/(.*)",
+            "dest": "/api/index.js"
         }
     ]
 }
