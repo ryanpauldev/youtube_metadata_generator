@@ -19,22 +19,6 @@ app.get("/api/transcribe", (req, res) => {
     const scriptPath = "get_transcript.py"; 
     const pythonCmd = process.env.NODE_ENV === "production" ? "python3" : "python";
 
-    exec("python --version", (error, stdout, stderr) => {
-        if (error) {
-            console.error("Python is not installed on Vercel!");
-        } else {
-            console.log(`Python version detected: ${stdout.trim()}`);
-        }
-    });
-    
-    exec("pip install -r backend/requirements.txt", (error, stdout, stderr) => {
-        if (error) {
-            console.error("Error installing dependencies:", stderr || error.message);
-        } else {
-            console.log("Python dependencies installed:", stdout.trim());
-        }
-    });
-
 
     exec(`${pythonCmd} ${scriptPath} ${videoId}`, (error, stdout, stderr) => {
         if (error || stderr) {

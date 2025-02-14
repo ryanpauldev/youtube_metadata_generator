@@ -25,7 +25,7 @@ function Hero() {
         setTranscript(null); // Reset transcript when a new URL is entered
     };
 
-    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api"; // Vercel auto-routes API
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
 
     const handleTranscriptSubmit = async () => {
         if (!videoId) {
@@ -39,6 +39,7 @@ function Hero() {
         setTranscript(null);
 
         try {
+            // Use API_BASE_URL inside the fetch request
             const response = await fetch(`${API_BASE_URL}/transcribe?videoId=${videoId}`);
             const data = await response.json();
 
@@ -59,7 +60,6 @@ function Hero() {
             setLoading(false);
         }
     };
-
 
 
     return (
