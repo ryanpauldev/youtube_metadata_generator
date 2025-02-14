@@ -25,11 +25,7 @@ function Hero() {
         setTranscript(null); // Reset transcript when a new URL is entered
     };
 
-    // Automatically set API base URL based on environment
-    const API_BASE_URL =
-        import.meta.env.MODE === "development"
-            ? "http://localhost:5000/api"
-            : "/api"; // Vercel handles this automatically in production
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
 
     const handleTranscriptSubmit = async () => {
         if (!videoId) {
@@ -64,6 +60,7 @@ function Hero() {
             setLoading(false);
         }
     };
+
 
     return (
         <div className="container">
