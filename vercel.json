@@ -1,16 +1,16 @@
 {
-    "functions": {
-        "api/index.js": {
-            "runtime": "nodejs18.x",
-            "memory": 1024,
-            "maxDuration": 30
-        }
-    },
-    "buildCommand": "pip3 install -r api/requirements.txt",
-    "routes": [
-        {
-            "src": "/api/(.*)",
-            "dest": "/api/index.js"
-        }
-    ]
+  "functions": {
+    "api/index.js": {
+      "runtime": "nodejs22.x",
+      "memory": 1024,
+      "maxDuration": 30
+    }
+  },
+  "buildCommand": "pip3 install -r api/requirements.txt",
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/index.js"
+    }
+  ]
 }
