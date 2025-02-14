@@ -14,10 +14,9 @@
         },
         {
             "src": "/(.*)",
-            "dest": "/index.html"
+            "dest": "/dist/index.html"
         }
     ],
     "buildCommand": "npm run build",
-    "installCommand": "npm install && pip3 install -r api/requirements.txt",
-    "outputDirectory": "dist"
+    "installCommand": "npm install && pip3 install -r api/requirements.txt"
 }
