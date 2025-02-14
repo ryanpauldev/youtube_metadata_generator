@@ -25,7 +25,10 @@ function Hero() {
         setTranscript(null); // Reset transcript when a new URL is entered
     };
 
-    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
+    const API_BASE_URL =
+        import.meta.env.MODE === "development"
+            ? "http://localhost:5000/api" // Local Development
+            : "https://youtube-metadata-generator.vercel.app/api"; // Vercel Deployment
 
     const handleTranscriptSubmit = async () => {
         if (!videoId) {
@@ -39,17 +42,12 @@ function Hero() {
         setTranscript(null);
 
         try {
-            // Use API_BASE_URL inside the fetch request
             const response = await fetch(`${API_BASE_URL}/transcribe?videoId=${videoId}`);
             const data = await response.json();
 
             if (response.ok) {
-                if (data.transcript.includes("Error: No transcript found")) {
-                    setTranscript("❌ No transcript available for this video.");
-                } else {
-                    setTranscript(data.transcript);
-                    console.log("Transcript received:", data.transcript);
-                }
+                setTranscript(data.transcript);
+                console.log("Transcript received:", data.transcript);
             } else {
                 throw new Error(data.error || "Failed to generate transcript.");
             }
@@ -60,6 +58,7 @@ function Hero() {
             setLoading(false);
         }
     };
+
 
 
     return (
